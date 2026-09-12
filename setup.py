@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from pathlib import Path
+
+from setuptools import find_packages, setup
 
 with open('requirements.txt') as f:
 	install_requires = f.read().strip().split('\n')
 
-# get version from __version__ variable in ewb_api_integration/__init__.py
-from ewb_api_integration import __version__ as version
+# Read the version without importing the app during an isolated package build.
+about = {}
+exec((Path(__file__).parent / "ewb_api_integration" / "__init__.py").read_text(), about)
+version = about["__version__"]
 
 setup(
 	name='ewb_api_integration',
